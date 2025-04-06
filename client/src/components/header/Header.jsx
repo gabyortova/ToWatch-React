@@ -2,7 +2,7 @@ import './Header.css'
 import { Link } from "react-router-dom";
 
 export default function Header() {
-  let isLoggedIn = false;
+  let isLoggedIn = true;
 
   return (
     <header>
