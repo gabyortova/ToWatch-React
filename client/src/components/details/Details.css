@@ -1,0 +1,19 @@
+.details-container {
+  display: flex;
+  align-items: flex-start;
+}
+.details-container h1 {
+  margin-bottom: 16px;
+  align-self: center;
+}
+.details-container h2 {
+  margin-bottom: 0.1em;
+}
+
+.details-container img {
+  max-width: 300px;
+}
+
+.details-container p {
+  margin: 8px 0;
+}

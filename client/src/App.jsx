@@ -5,6 +5,8 @@ import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
 import Login from './components/login/Login';
 import Register from "./components/register/Register";
+import Catalog from "./components/catalog/Catalog";
+import Details from "./components/details/Details";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route index element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/catalog" element={<Catalog />} />
+        <Route path="/catalog/details" element={<Details />} />
       </Routes>
 
       <Footer />
