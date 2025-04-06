@@ -1,0 +1,126 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  padding: 0px;
+  position: relative;
+  background-color: #fdecef;
+}
+
+body,
+input {
+  font-size: 16px;
+}
+
+p {
+  font-size: 1.1em;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.buttons .button {
+  margin-right: 20px;
+}
+
+.buttons .button:last-child {
+  margin-right: 0;
+}
+a.button {
+  text-decoration: none;
+}
+
+button,
+a.button,
+button:disabled:hover {
+  background-color: #612940;
+  color: #fdecef;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  align-self: center;
+  border-radius: 10px;
+}
+
+a.button:hover,
+button:hover {
+  background-color: #9d6381;
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+h1 {
+  text-align: center;
+}
+
+a {
+  color: #612940;
+}
+
+.form-container,
+.big-container {
+  padding: 20px 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  width: 80%;
+  max-width: 840px;
+  margin-top: 50px;
+  background-color: white;
+  border: #cecccc solid;
+  border-radius: 10px;
+}
+
+.form-container.fields {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+input,
+textarea {
+  color: #0f110c;
+  width: 100%;
+  padding: 16px;
+  display: inline-block;
+  border: none;
+  background: #cecccc;
+  border-radius: 10px;
+}
+
+input:focus {
+  background: rgba(206, 204, 204, 0.7);
+  outline: none;
+}
+
+label {
+  padding-left: 10px;
+  margin-right: 10px;
+}
+
+p.error {
+  color: #612940;
+  margin: 6px;
+}
+
+.inputCont {
+  margin: 6px 0 22px 0;
+}
+
+input {
+  margin: 6px 0;
+}
+
+input[type="checkbox"] {
+  width: unset;
+}
