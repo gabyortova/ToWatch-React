@@ -1,19 +1,36 @@
 import { Link } from "react-router-dom";
-import "./Login.css";
+import './Register.css'
 
-export default function Login() {
+export default function Register() {
   return (
     <>
       <form>
         <div className="form-container">
-          <h1>Login</h1>
+          <h1>Register</h1>
           <div className="fields">
+            <div className="inputCont">
+              <label htmlFor="username">
+                <b>Username:</b>
+              </label>
+              <input
+                type="text"
+                placeholder="your username"
+                name="username"
+                id="username"
+                minLength="2"
+                required
+              />
+              <div>
+                {/* <p className="error">Username must be at least 2 characters!</p> */}
+              </div>
+            </div>
+
             <div className="inputCont">
               <label htmlFor="email">
                 <b>Email:</b>
               </label>
               <input
-                type="email"
+                type="text"
                 placeholder="your.mail@gmail.com"
                 name="email"
                 id="email"
@@ -46,12 +63,29 @@ export default function Login() {
                 {/* <p className="error">Password must be at least 5 characters!</p> */}
               </div>
             </div>
+
+            <div className="inputCont">
+              <label htmlFor="rePass">
+                <b>Repeat password:</b>
+              </label>
+              <input
+                type="password"
+                placeholder="*******"
+                name="rePass"
+                id="rePass"
+                required
+              />
+
+              <div>
+                {/* <p className="error">Passwords don't match!</p> */}
+              </div>
+            </div>
           </div>
-          <button>Login</button>
+          <button className="registerbtn">Register</button>
         </div>
-        <div className="register">
+        <div className="login">
           <p>
-            Don't have an account? <Link to="/register">Register</Link>
+            Already have an account? <Link to="/login">Login</Link>
           </p>
         </div>
       </form>
