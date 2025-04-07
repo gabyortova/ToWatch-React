@@ -13,7 +13,9 @@ body,
 input {
   font-size: 16px;
 }
-
+main {
+  padding: 20px 20px 50px 20px;
+}
 p {
   font-size: 1.1em;
 }

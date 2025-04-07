@@ -12,3 +12,15 @@ export const useVideos = () => {
 
   return { videos };
 };
+
+export const useVideo = (videoId) => {
+  const [video, setVideo] = useState({});
+
+  useEffect(() => {
+    request.get(`${baseUrl}/${videoId}`).then(setVideo);
+  }, [videoId]);
+
+  return {
+    video,
+  };
+};

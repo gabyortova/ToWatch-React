@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
-export default function CatalogItem({ title, videoUrl, imgUrl }) {
+export default function CatalogItem({ _id, title, videoUrl, imgUrl }) {
+  console.log(_id);
+  console.log(title, videoUrl, imgUrl);
+  
+  
   return (
     <div className="card">
       <img src={imgUrl} />
@@ -9,7 +13,7 @@ export default function CatalogItem({ title, videoUrl, imgUrl }) {
         <a href={videoUrl} className="button" target="_blank">
           Watch Video
         </a>
-        <Link to="/catalog/details" className="button">
+        <Link to={`/catalog/details/${_id}`} className="button">
           Details
         </Link>
       </div>

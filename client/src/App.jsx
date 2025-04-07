@@ -20,19 +20,19 @@ function App() {
   return (
     <UserProvider>
       <Header />
-
-      <Routes>
-        <Route index element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/catalog" element={<Catalog />} />
-        <Route path="/catalog/details" element={<Details />} />
-        <Route path="/create-video" element={<CreateVideo />} />
-        <Route path="/edit" element={<EditForm />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
-
+      <main>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/catalog" element={<Catalog />} />
+          <Route path="/catalog/details/:videoId" element={<Details />} />
+          <Route path="/create-video" element={<CreateVideo />} />
+          <Route path="/edit" element={<EditForm />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </main>
       <Footer />
     </UserProvider>
   );
