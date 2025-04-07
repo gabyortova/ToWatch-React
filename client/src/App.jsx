@@ -8,6 +8,7 @@ import Register from "./components/register/Register";
 import Catalog from "./components/catalog/Catalog";
 import Details from "./components/details/Details";
 import CreateVideo from "./components/create-video/CreateVideo";
+import EditForm from "./components/edit-form/EditForm";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/catalog/details" element={<Details />} />
         <Route path="/create-video" element={<CreateVideo />} />
+        <Route path="/edit" element={<EditForm />} />
       </Routes>
 
       <Footer />

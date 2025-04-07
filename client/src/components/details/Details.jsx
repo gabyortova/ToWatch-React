@@ -19,7 +19,7 @@ export default function Details({ video }) {
           Watch Video
         </a>
 
-        <Link to="/edit/{video._id}" className="button">
+        <Link to="/edit" className="button">
           Edit
         </Link>
         <Link to="/delete/{video._id}" className="button">
