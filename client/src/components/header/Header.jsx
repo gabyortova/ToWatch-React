@@ -1,14 +1,19 @@
-import './Header.css'
+import "./Header.css";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import { useUserContext } from "../contexts/UserContex";
 
 export default function Header() {
-  let isLoggedIn = true;
+  const { username, isAuthenticated } = useAuth();
+  const { userLogoutHandler } = useUserContext();
+  console.log(username);
+  console.log(isAuthenticated);
 
   return (
     <header>
-      {/* <Link to="/">
-        <img src="./img/logoToWatch.png" className="logo" />
-      </Link> */}
+      <Link to="/">
+        <img src="/logoToWatch.png" className="logo" />
+      </Link>
       <nav>
         <ul>
           <li>
@@ -17,7 +22,7 @@ export default function Header() {
           <li>
             <Link to="/catalog">Catalog</Link>
           </li>
-          {isLoggedIn && (
+          {isAuthenticated && (
             <>
               <li>
                 <Link to="/my-videos">My videos</Link>
@@ -25,20 +30,18 @@ export default function Header() {
               <li>
                 <Link to="/create-video">Create video</Link>
               </li>
+              <li>
+                <Link to="/profile">Hello, {username}!</Link>
+              </li>
+              <li>
+                <a onClick={userLogoutHandler}>Logout</a>
+              </li>
             </>
           )}
         </ul>
       </nav>
       <ul>
-        {isLoggedIn && (
-          <>
-            <li>
-              <Link to="/profile">Hello, username!</Link>
-            </li>
-            {/* <li><a (click)="logout()">Logout</Link></li> */}
-          </>
-        )}
-        {!isLoggedIn && (
+        {!isAuthenticated && (
           <>
             <li>
               <Link to="/login">Login</Link>

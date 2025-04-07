@@ -3,7 +3,7 @@ import "./Home.css";
 export default function Home() {
   return (
     <>
-      <div className="container">
+      <div className="container-home">
         <h1>Welcome to our video collection platform ToWatch📹!</h1>
         <div className="description">
           Here, you can create your personalized collection of videos from

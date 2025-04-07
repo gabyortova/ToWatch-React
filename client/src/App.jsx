@@ -1,9 +1,13 @@
-import "./App.css";
 import { Routes, Route } from "react-router";
+
+import "./App.css";
+
+import UserProvider from "./providers/UserProvider";
+
 import Home from "./components/home/Home";
 import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
-import Login from './components/login/Login';
+import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import Catalog from "./components/catalog/Catalog";
 import Details from "./components/details/Details";
@@ -14,7 +18,7 @@ import Profile from "./components/profile/Profile";
 
 function App() {
   return (
-    <>
+    <UserProvider>
       <Header />
 
       <Routes>
@@ -30,7 +34,7 @@ function App() {
       </Routes>
 
       <Footer />
-    </>
+    </UserProvider>
   );
 }
 
