@@ -6,8 +6,6 @@ import { useUserContext } from "../contexts/UserContex";
 export default function Header() {
   const { username, isAuthenticated } = useAuth();
   const { userLogoutHandler } = useUserContext();
-  console.log(username);
-  console.log(isAuthenticated);
 
   return (
     <header>

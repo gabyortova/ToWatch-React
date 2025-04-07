@@ -1,15 +1,22 @@
+.no-videos-container {
+  margin: auto; 
+  height: 700px auto;
+  margin-top: 150px;
+  text-align: center;
+}
 .catalog-container {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  /* background-color: #f4f4f4; */
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  /* align-items: center; */
+  /* min-height: 100vh; */
 }
 
 .catalog-container {
+  margin: 1em;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
@@ -44,6 +51,7 @@
 .card p {
   padding: 0 15px;
 }
+
 .card:hover {
   transform: translateY(-5px);
 }
