@@ -1,3 +1,5 @@
+import './EditForm.css'
+
 export default function EditForm() {
   return (
     <>
