@@ -10,6 +10,7 @@ import Details from "./components/details/Details";
 import CreateVideo from "./components/create-video/CreateVideo";
 import EditForm from "./components/edit-form/EditForm";
 import ErrorPage from "./components/error-page/ErrorPage";
+import Profile from "./components/profile/Profile";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/catalog/details" element={<Details />} />
         <Route path="/create-video" element={<CreateVideo />} />
         <Route path="/edit" element={<EditForm />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
 
