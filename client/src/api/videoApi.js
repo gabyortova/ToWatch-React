@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import request from "../utils/request";
+import useAuth from "../components/hooks/useAuth";
 
 const baseUrl = "http://localhost:5100/api/videos";
 
@@ -22,5 +23,17 @@ export const useVideo = (videoId) => {
 
   return {
     video,
+  };
+};
+
+export const useCrateVideo = () => {
+  const { request } = useAuth();
+
+  const create = (videoData) => {
+    request.post(baseUrl, videoData);
+  };
+
+  return {
+    create,
   };
 };

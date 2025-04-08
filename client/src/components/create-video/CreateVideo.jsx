@@ -1,12 +1,35 @@
+import { useNavigate } from "react-router";
+import { useCrateVideo } from "../../api/videoApi";
+
 export default function CreateVideo() {
+  const navigate = useNavigate();
+  const { create: crateVideo } = useCrateVideo();
+
+  const submitAction = (formData) => {
+    let { title, videoUrl, description, imgUrl, isPublic } =
+      Object.fromEntries(formData);
+
+    if (isPublic == "on") {
+      isPublic = true;
+    } else {
+      isPublic = false;
+    }
+
+    const videoData = { title, videoUrl, description, imgUrl, isPublic };
+
+    crateVideo(videoData);
+
+    navigate(`/catalog`);
+  };
+
   return (
     <>
-      <form>
+      <form action={submitAction}>
         <div className="form-container">
           <h1>Create video</h1>
           <div className="fields">
             <div className="inputCont">
-              <label for="title">
+              <label htmlFor="title">
                 <b>Title:</b>
               </label>
               <input

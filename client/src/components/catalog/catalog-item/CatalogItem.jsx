@@ -1,10 +1,6 @@
 import { Link } from "react-router-dom";
 
 export default function CatalogItem({ _id, title, videoUrl, imgUrl }) {
-  console.log(_id);
-  console.log(title, videoUrl, imgUrl);
-  
-  
   return (
     <div className="card">
       <img src={imgUrl} />
