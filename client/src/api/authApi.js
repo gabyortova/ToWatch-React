@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import request from "../utils/request";
 import { UserContext } from "../components/contexts/UserContex";
 
@@ -42,5 +41,27 @@ export const useLogout = () => {
 
   return {
     isLoggedOut: !!accessToken,
+  };
+};
+
+export const useProfile = () => {
+  const { accessToken } = useContext(UserContext);
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    if (!accessToken) {
+      return;
+    }
+    
+    const options = {
+      headers: {
+        "x-authorization": accessToken,
+      },
+    };
+    request.get(`${baseUrl}/users/profile`, null, options).then(setUser);
+  }, [accessToken]);
+
+  return {
+    user,
   };
 };

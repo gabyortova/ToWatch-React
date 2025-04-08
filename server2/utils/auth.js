@@ -7,9 +7,10 @@ const {
 
 function auth(redirectUnauthenticated = true) {
     return function (req, res, next) {
-        const token = req.cookies[authCookieName] || '';
+        const token =
+      req.headers["x-authorization"] || req.cookies[authCookieName] || "";
         console.debug(req.cookies);
-        
+
         console.log('req.cookies[authCookieName] ' + req.cookies[authCookieName]);
         
         console.log('Token from cookies:', token);  // Лог за да видите токена
