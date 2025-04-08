@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import request from "../utils/request";
 import useAuth from "../components/hooks/useAuth";
+import { UserContext } from "../components/contexts/UserContex";
 
 const baseUrl = "http://localhost:5100/api/videos";
 
@@ -24,6 +25,26 @@ export const useVideo = (videoId) => {
   return {
     video,
   };
+};
+
+export const useMyVideos = () => {
+  const { accessToken } = useContext(UserContext);
+  const [myVideos, setMyVideos] = useState([]);
+
+  useEffect(() => {
+    if (!accessToken) {
+      return;
+    }
+
+    const options = {
+      headers: {
+        "x-authorization": accessToken,
+      },
+    };
+    request.get(`${baseUrl}/my`, null, options).then(setMyVideos);
+  }, [accessToken]);
+
+  return { myVideos };
 };
 
 export const useCrateVideo = () => {
