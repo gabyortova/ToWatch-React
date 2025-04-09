@@ -1,9 +1,19 @@
-export default function ProfileEdit({
-    editClickHandler
-}) {
+import { useEditProfile } from "../../api/progileApi";
+
+export default function ProfileEdit({ editClickHandler }) {
+  const { editProfile } = useEditProfile();
+
+  const submitAction = (formData) => {
+    const { username, email } = Object.fromEntries(formData);
+
+    editProfile(username, email);
+
+    editClickHandler();
+  };
+
   return (
     <>
-      <form>
+      <form action={submitAction}>
         <div>
           <div className="inputCont">
             <label htmlFor="username">

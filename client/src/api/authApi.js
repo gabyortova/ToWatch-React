@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext } from "react";
 import request from "../utils/request";
 import { UserContext } from "../components/contexts/UserContex";
 import useAuth from "../components/hooks/useAuth";
@@ -43,20 +43,5 @@ export const useLogout = () => {
 
   return {
     isLoggedOut: !!accessToken,
-  };
-};
-
-export const useProfile = () => {
-  const { request } = useAuth();
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    request.get(`${baseUrl}/users/profile`).then(setUser);
-  }, [request]);
-
-  console.log(user);
-  
-  return {
-    user,
   };
 };

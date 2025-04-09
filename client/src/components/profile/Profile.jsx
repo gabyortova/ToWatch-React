@@ -1,14 +1,14 @@
-import ProfileEdit from "./ProfileEdit";
-import { useProfile } from "../../api/authApi";
-import "./Profile.css";
 import { useState } from "react";
+import { useProfile } from "../../api/progileApi";
+import ProfileEdit from "./ProfileEdit";
+import "./Profile.css";
 
 export default function Profile() {
   const { user } = useProfile();
   const [isEdit, setIsEdit] = useState(false);
-
+  
   const editClickHandler = () => {
-    setIsEdit(isEdit => !isEdit);
+    setIsEdit((isEdit) => !isEdit);
   };
 
   return (
