@@ -16,26 +16,26 @@ const request = async (method, url, data, options = {}) => {
 
   const response = await fetch(url, options);
 
-  const responseContentType = response.headers.get('Content-Type');
-    if (!responseContentType) {
-        return;
-    }
+  const responseContentType = response.headers.get("Content-Type");
+  if (!responseContentType) {
+    return;
+  }
 
-    if (!response.ok) {
-        const result = await response.json();
-
-        throw result;
-    }
-
+  if (!response.ok) {
     const result = await response.json();
 
-    return result;
+    throw result;
+  }
+
+  const result = await response.json();
+
+  return result;
 };
 
 export default {
-    get: request.bind(null, 'GET'),
-    post: request.bind(null, 'POST'),
-    put: request.bind(null, 'PUT'),
-    delete: request.bind(null, 'DELETE'),
-    baseRequest: request,
-}
+  get: request.bind(null, "GET"),
+  post: request.bind(null, "POST"),
+  put: request.bind(null, "PUT"),
+  delete: request.bind(null, "DELETE"),
+  baseRequest: request,
+};

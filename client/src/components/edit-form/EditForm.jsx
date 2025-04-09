@@ -1,9 +1,34 @@
-import './EditForm.css'
+import { useNavigate, useParams } from "react-router";
+import { useEditVideo } from "../../api/videoApi";
+import "./EditForm.css";
 
 export default function EditForm() {
+  const navigate = useNavigate();
+  const { edit } = useEditVideo();
+
+  let videoId = useParams();
+  videoId = videoId.videoId;
+
+  const submitAction = (formData) => {
+    let { title, videoUrl, description, imgUrl, isPublic } =
+      Object.fromEntries(formData);
+
+    if (isPublic == "on") {
+      isPublic = true;
+    } else {
+      isPublic = false;
+    }
+
+    const videoData = { title, videoUrl, description, imgUrl, isPublic };
+
+    edit(videoId, videoData);
+
+    navigate("/my-videos");
+  };
+
   return (
     <>
-      <form>
+      <form action={submitAction}>
         <div className="form-container">
           <h1>Update video</h1>
           <div className="fields">

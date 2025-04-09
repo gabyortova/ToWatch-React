@@ -3,9 +3,7 @@ import CatalogItem from "../catalog/catalog-item/CatalogItem";
 
 export default function MyVideos() {
   const { myVideos } = useMyVideos();
-  console.log(myVideos);
   
-
   return (
     <div className="catalog-container">
       {myVideos.length > 0 ? (

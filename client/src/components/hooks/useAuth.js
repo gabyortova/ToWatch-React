@@ -10,7 +10,7 @@ export default function useAuth() {
       const authOptions = {
         ...options,
         headers: {
-          "X-Authorization": accessToken,
+          "x-authorization": accessToken,
           ...options.headers,
         },
       };

@@ -1,6 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import request from "../utils/request";
 import { UserContext } from "../components/contexts/UserContex";
+import useAuth from "../components/hooks/useAuth";
 
 const baseUrl = "http://localhost:5100/api";
 
@@ -23,6 +24,7 @@ export const useRegister = () => {
 };
 
 export const useLogout = () => {
+  const { request } = useAuth();
   const { accessToken, userLogoutHandler } = useContext(UserContext);
 
   useEffect(() => {
@@ -32,12 +34,12 @@ export const useLogout = () => {
 
     const options = {
       headers: {
-        "X-Authorization": accessToken,
+        "x-authorization": accessToken,
       },
     };
 
     request.get(`${baseUrl}/logout`, null, options).finally(userLogoutHandler);
-  }, [accessToken, userLogoutHandler]);
+  }, [accessToken, userLogoutHandler, request]);
 
   return {
     isLoggedOut: !!accessToken,
@@ -45,22 +47,15 @@ export const useLogout = () => {
 };
 
 export const useProfile = () => {
-  const { accessToken } = useContext(UserContext);
+  const { request } = useAuth();
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    if (!accessToken) {
-      return;
-    }
-    
-    const options = {
-      headers: {
-        "x-authorization": accessToken,
-      },
-    };
-    request.get(`${baseUrl}/users/profile`, null, options).then(setUser);
-  }, [accessToken]);
+    request.get(`${baseUrl}/users/profile`).then(setUser);
+  }, [request]);
 
+  console.log(user);
+  
   return {
     user,
   };

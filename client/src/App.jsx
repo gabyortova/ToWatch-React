@@ -30,7 +30,7 @@ function App() {
           <Route path="/my-videos" element={<MyVideos />} />
           <Route path="/catalog/details/:videoId" element={<Details />} />
           <Route path="/create-video" element={<CreateVideo />} />
-          <Route path="/edit" element={<EditForm />} />
+          <Route path="/edit/:videoId" element={<EditForm />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>

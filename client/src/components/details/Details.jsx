@@ -24,7 +24,7 @@ export default function Details() {
           Watch Video
         </a>
 
-        <Link to="/edit" className="button">
+        <Link to={`/edit/${videoId}`} className="button">
           Edit
         </Link>
         <Link to="/delete/{video._id}" className="button">

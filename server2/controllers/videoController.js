@@ -87,6 +87,13 @@ function editVideo(req, res, next) {
   const { title, videoUrl, description, imgUrl, isPublic } = req.body;
   const { _id: userId } = req.user;
 
+  console.log('----------------');
+  console.log('user id ' + userId);
+  console.log('video id ' + videoId);
+  console.log('----------------');
+
+  
+
   videoModel
     .findOneAndUpdate(
       { _id: videoId, userId },
