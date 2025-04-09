@@ -11,11 +11,17 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
+import useAuth from "../hooks/useAuth";
 import "./Details.css";
+import { useUserContext } from "../contexts/UserContex";
 
 export default function Details() {
   const { videoId } = useParams();
   const { video } = useVideo(videoId);
+
+  const { isAuthenticated } = useAuth();
+  const { _id } = useUserContext()
+
   const { deleteVideo } = useDeleteVideo();
 
   const { likeVideo } = useLikeVideo();
@@ -48,13 +54,17 @@ export default function Details() {
       setIsLiked(data.isLiked);
     };
 
-    fetchLikeStatus();
-  }, [videoId, getLikeStatus]);
+    if (isAuthenticated) {
+      fetchLikeStatus();
+    }
+  }, [videoId, getLikeStatus, isAuthenticated]);
 
   const deleteVideoHandler = () => {
-    deleteVideo(videoId);
+    if (confirm("Are you sure you want to delete this video?")) {
+      deleteVideo(videoId);
 
-    navigate("/my-videos");
+      navigate("/my-videos");
+    }
   };
 
   const likeVideoHandler = async () => {
@@ -89,18 +99,20 @@ export default function Details() {
       <p>{video.created_at}</p>
 
       <div className="likes-container">
-        <p>Likes</p>
-        <button
-          onClick={isLiked ? unlikeVideoHandler : likeVideoHandler}
-          className="icon"
-          title={isLiked ? "Unlike" : "Like"}
-        >
-          <FontAwesomeIcon
-            icon={isLiked ? faHeart : faHeartRegular}
-            style={{ color: "#612940" }}
-          />
-        </button>
-        <p>{likeCount}</p>
+        <p>Likes {likeCount}</p>
+
+        {isAuthenticated && (
+          <button
+            onClick={isLiked ? unlikeVideoHandler : likeVideoHandler}
+            className="icon"
+            title={isLiked ? "Unlike" : "Like"}
+          >
+            <FontAwesomeIcon
+              icon={isLiked ? faHeart : faHeartRegular}
+              style={{ color: "#612940" }}
+            />
+          </button>
+        )}
       </div>
 
       <div className="buttons">
@@ -108,12 +120,16 @@ export default function Details() {
           Watch Video
         </a>
 
-        <Link to={`/edit/${videoId}`} className="button">
-          Edit
-        </Link>
-        <button onClick={deleteVideoHandler} className="button">
-          Delete
-        </button>
+        {_id == video.userId && (
+          <>
+            <Link to={`/edit/${videoId}`} className="button">
+              Edit
+            </Link>
+            <button onClick={deleteVideoHandler} className="button">
+              Delete
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

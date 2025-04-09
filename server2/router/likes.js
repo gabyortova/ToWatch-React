@@ -5,7 +5,7 @@ const { videoController } = require("../controllers");
 
 // middleware that is specific to this router
 
-router.get("/like-count/:videoId", auth(), videoController.getLikeCount);
+router.get("/like-count/:videoId", videoController.getLikeCount);
 
 router.get("/like-status/:videoId", auth(), videoController.likeStatus);
 
