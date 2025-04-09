@@ -61,3 +61,13 @@ export const useEditVideo = () => {
     edit,
   };
 };
+
+export const useDeleteVideo = () => {
+  const { request } = useAuth();
+
+  const deleteVideo = (videoId) => {
+    return request.delete(`${baseUrl}/${videoId}`);
+  };
+
+  return { deleteVideo };
+};

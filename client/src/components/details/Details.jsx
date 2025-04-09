@@ -1,10 +1,18 @@
-import { Link, useParams } from "react-router-dom";
-import { useVideo } from "../../api/videoApi";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDeleteVideo, useVideo } from "../../api/videoApi";
 import "./Details.css";
 
 export default function Details() {
   const { videoId } = useParams();
   const { video } = useVideo(videoId);
+  const { deleteVideo } = useDeleteVideo();
+  const navigate = useNavigate();
+
+  const deleteVideoHandler = () => {
+    deleteVideo(videoId);
+
+    navigate("/my-videos");
+  };
 
   return (
     <div className="big-container details-container">
@@ -27,9 +35,9 @@ export default function Details() {
         <Link to={`/edit/${videoId}`} className="button">
           Edit
         </Link>
-        <Link to="/delete/{video._id}" className="button">
+        <button onClick={deleteVideoHandler} className="button">
           Delete
-        </Link>
+        </button>
       </div>
     </div>
   );
