@@ -17,3 +17,14 @@
 .details-container p {
   margin: 8px 0;
 }
+
+.details-container .icon {
+  background-color: transparent;
+  font-size: 27px;
+  align-self: flex-start;
+}
+
+.details-container .likes-container {
+  display: flex;
+  align-items: center;
+}

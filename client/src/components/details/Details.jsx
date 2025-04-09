@@ -1,17 +1,78 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useDeleteVideo, useVideo } from "../../api/videoApi";
+import { useEffect, useState } from "react";
+import {
+  useDeleteVideo,
+  useLikeStatus,
+  useLikeVideo,
+  useUnlikeVideo,
+  useVideo,
+  useGetLikeCount,
+} from "../../api/videoApi";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import "./Details.css";
 
 export default function Details() {
   const { videoId } = useParams();
   const { video } = useVideo(videoId);
   const { deleteVideo } = useDeleteVideo();
+
+  const { likeVideo } = useLikeVideo();
+  const { unlikeVideo } = useUnlikeVideo();
+
+  const { getLikeStatus } = useLikeStatus();
+  const { getLikeCount } = useGetLikeCount();
+
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchLikeCount = async () => {
+      try {
+        const response = await getLikeCount(videoId);
+        setLikeCount(response.likeCount);
+      } catch (error) {
+        console.error("Error fetching like count: ", error);
+      }
+    };
+
+    fetchLikeCount();
+  }, [videoId, getLikeCount, isLiked]);
+
+  useEffect(() => {
+    const fetchLikeStatus = async () => {
+      const data = await getLikeStatus(videoId);
+      setIsLiked(data.isLiked);
+    };
+
+    fetchLikeStatus();
+  }, [videoId, getLikeStatus]);
 
   const deleteVideoHandler = () => {
     deleteVideo(videoId);
 
     navigate("/my-videos");
+  };
+
+  const likeVideoHandler = async () => {
+    try {
+      await likeVideo(videoId);
+      setIsLiked(true);
+    } catch (error) {
+      console.error("Error liking video: ", error);
+    }
+  };
+
+  const unlikeVideoHandler = async () => {
+    try {
+      await unlikeVideo(videoId);
+      setIsLiked(false);
+    } catch (error) {
+      console.error("Error unliking video: ", error);
+    }
   };
 
   return (
@@ -26,6 +87,21 @@ export default function Details() {
 
       <h2>Created at:</h2>
       <p>{video.created_at}</p>
+
+      <div className="likes-container">
+        <p>Likes</p>
+        <button
+          onClick={isLiked ? unlikeVideoHandler : likeVideoHandler}
+          className="icon"
+          title={isLiked ? "Unlike" : "Like"}
+        >
+          <FontAwesomeIcon
+            icon={isLiked ? faHeart : faHeartRegular}
+            style={{ color: "#612940" }}
+          />
+        </button>
+        <p>{likeCount}</p>
+      </div>
 
       <div className="buttons">
         <a href={video.videoUrl} className="button" target="_blank">

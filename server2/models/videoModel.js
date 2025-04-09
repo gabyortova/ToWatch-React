@@ -21,6 +21,10 @@ const videoSchema = new mongoose.Schema(
     isPublic: {
       type: Boolean,
     },
+    likes: [{
+      type: ObjectId,
+      ref: 'User',
+    }],
     userId: {
       type: ObjectId,
       ref: 'User',

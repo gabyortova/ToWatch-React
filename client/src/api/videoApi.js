@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import request from "../utils/request";
 import useAuth from "../components/hooks/useAuth";
 
@@ -77,4 +77,44 @@ export const useDeleteVideo = () => {
   };
 
   return { deleteVideo };
+};
+
+export const useLikeVideo = () => {
+  const { request } = useAuth();
+
+  const likeVideo = (idVideo) => {
+    return request.post(`http://localhost:5100/api/likes/like/${idVideo}`);
+  };
+
+  return { likeVideo };
+};
+
+export const useUnlikeVideo = () => {
+  const { request } = useAuth();
+
+  const unlikeVideo = (idVideo) => {
+    return request.post(`http://localhost:5100/api/likes/unlike/${idVideo}`);
+  };
+
+  return { unlikeVideo };
+};
+
+export const useLikeStatus = () => {
+  const { request } = useAuth();
+
+  const getLikeStatus = useCallback((idVideo) => {
+    return request.get(`http://localhost:5100/api/likes/like-status/${idVideo}`);
+  }, [request]);
+
+  return { getLikeStatus };
+};
+
+export const useGetLikeCount = () => {
+  const { request } = useAuth();
+
+  const getLikeCount = useCallback((idVideo) => {
+    return request.get(`http://localhost:5100/api/likes/like-count/${idVideo}`);
+  }, [request]);
+
+  return { getLikeCount };
 };

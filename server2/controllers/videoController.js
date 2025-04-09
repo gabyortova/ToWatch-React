@@ -1,4 +1,4 @@
-const { userModel, playlistModel, videoModel } = require('../models');
+const { userModel, playlistModel, videoModel } = require("../models");
 
 function newVideo(text, userId) {
   return videoModel.create({ text, userId }).then((video) => {
@@ -22,7 +22,7 @@ function getVideo(req, res, next) {
     .then((video) => {
       if (!video) {
         // If no video is found, send a 404 response
-        return res.status(404).json({ message: 'Video not found' });
+        return res.status(404).json({ message: "Video not found" });
       }
 
       // Send the video details as the response
@@ -30,14 +30,14 @@ function getVideo(req, res, next) {
     })
     .catch((err) => {
       // Log the error and pass it to the error-handling middleware
-      console.error('Error fetching video:', err);
+      console.error("Error fetching video:", err);
       next(err);
     });
 }
 
 function getUserVideos(req, res, next) {
   const { _id: userId } = req.user;
-  console.log('getUserVideos userid ' + userId);
+  console.log("getUserVideos userid " + userId);
   videoModel
     .find({ userId: userId })
     .sort({ created_at: -1 })
@@ -63,17 +63,17 @@ function getLatestsVideos(req, res, next) {
 }
 
 function createVideo(req, res, next) {
-  console.log('create');
-  console.log('user' + req.user);
-  
+  console.log("create");
+  console.log("user" + req.user);
+
   const { title, videoUrl, description, imgUrl, isPublic } = req.body;
   const { _id: userId } = req.user;
-  console.log('userid ' + userId);
-  
+  console.log("userid " + userId);
+
   console.log(
     `title: ${title}, videoUrl: ${videoUrl}, description: ${description}, imgUrl: ${imgUrl}, userid: ${userId}`
   );
-  
+
   videoModel
     .create({ userId, title, videoUrl, description, imgUrl, isPublic })
     .then((video) => {
@@ -87,13 +87,6 @@ function editVideo(req, res, next) {
   const { title, videoUrl, description, imgUrl, isPublic } = req.body;
   const { _id: userId } = req.user;
 
-  console.log('----------------');
-  console.log('user id ' + userId);
-  console.log('video id ' + videoId);
-  console.log('----------------');
-
-  
-
   videoModel
     .findOneAndUpdate(
       { _id: videoId, userId },
@@ -106,14 +99,14 @@ function editVideo(req, res, next) {
       } else {
         res
           .status(403)
-          .json({ message: 'Not allowed! You are not the owner.' });
+          .json({ message: "Not allowed! You are not the owner." });
       }
     })
     .catch((err) => {
       console.error(err);
       res
         .status(500)
-        .json({ message: 'Something went wrong.', error: err.message });
+        .json({ message: "Something went wrong.", error: err.message });
     });
 }
 
@@ -125,7 +118,7 @@ function deleteVideo(req, res, next) {
     videoModel.findOneAndDelete({ _id: videoId, userId }),
     userModel.findOneAndUpdate({ _id: userId }, { $pull: { videos: videoId } }),
     // playlistModel.findOneAndUpdate(
-      // { _id: playlistId },
+    // { _id: playlistId },
     //   { $pull: { videos: videoId } }
     // ),
   ])
@@ -139,22 +132,94 @@ function deleteVideo(req, res, next) {
     .catch(next);
 }
 
-function like(req, res, next) {
+async function like(req, res, next) {
   const { videoId } = req.params;
   const { _id: userId } = req.user;
 
   videoModel
-    .updateOne(
-      { _id: videoId },
-      { $addToSet: { likes: userId } },
-      { new: true }
-    )
-    .then(() => res.status(200).json({ message: 'Liked successful!' }))
+    .updateOne({ _id: videoId }, { $addToSet: { likes: userId } })
     .catch(next);
+
+  try {
+    const video = await videoModel.findById(videoId);
+    if (!video) {
+      return res.status(404).json({ message: "Video not found" });
+    }
+
+    const user = await userModel.findById(userId);
+    if (user.likedVideos.includes(videoId)) {
+      return res.status(400).json({ message: "You already liked this video" });
+    }
+
+    user.likedVideos.push(videoId);
+    await user.save();
+
+    res.status(200).json({ message: "Video liked successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
 }
 
-function getPublicVideos(params) {
-  
+async function unlike(req, res, next) {
+  const { videoId } = req.params;
+  const { _id: userId } = req.user;
+
+    videoModel
+      .updateOne({ _id: videoId }, { $pull: { likes: userId } })
+      .catch(next);
+
+  try {
+    const video = await videoModel.findById(videoId);
+    if (!video) {
+      return res.status(404).json({ message: "Video not found" });
+    }
+
+    const user = await userModel.findById(userId);
+    if (!user.likedVideos.includes(videoId)) {
+      return res.status(400).json({ message: "You have not liked this video" });
+    }
+
+    user.likedVideos = user.likedVideos.filter(
+      (id) => id.toString() !== videoId
+    );
+    await user.save();
+
+    res.status(200).json({ message: "Video unliked successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+}
+
+async function likeStatus(req, res) {
+  const { videoId } = req.params;
+  const userId = req.user._id;
+
+  try {
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const isLiked = user.likedVideos.includes(videoId);
+    res.status(200).json({ isLiked });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+}
+
+function getLikeCount(req, res, next) {
+  const { videoId } = req.params;
+
+  videoModel
+    .findById(videoId)
+    .then((video) => {
+      if (!video) {
+        return res.status(404).json({ message: "Video not found" });
+      }
+      const likeCount = video.likes.length;
+      res.status(200).json({ likeCount });
+    })
+    .catch(next);
 }
 
 module.exports = {
@@ -166,4 +231,7 @@ module.exports = {
   editVideo,
   deleteVideo,
   like,
+  unlike,
+  getLikeCount,
+  likeStatus,
 };
