@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import request from "../utils/request";
 import useAuth from "../components/hooks/useAuth";
-import { UserContext } from "../components/contexts/UserContex";
 
 const baseUrl = "http://localhost:5100/api/videos";
 
@@ -43,7 +42,7 @@ export const useCrateVideo = () => {
 
   const create = (videoData) => {
     if (!videoData.imgUrl) {
-      videoData.imgUrl = '/images/video-icon.png';
+      videoData.imgUrl = "/images/video-icon.png";
     }
 
     request.post(baseUrl, videoData);
@@ -58,6 +57,10 @@ export const useEditVideo = () => {
   const { request } = useAuth();
 
   const edit = (videoId, videoData) => {
+    if (!videoData.imgUrl) {
+      videoData.imgUrl = "/images/video-icon.png";
+    }
+
     return request.put(`${baseUrl}/${videoId}`, videoData);
   };
 

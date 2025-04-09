@@ -12,9 +12,18 @@ export default function UserProvider({ children }) {
     setAuthData({});
   };
 
+  const userUpdateHandler = ({ username, email }) => {
+    setAuthData({ ...authData, username, email });
+  };
+
   return (
     <UserContext.Provider
-      value={{ ...authData, userLoginHandler, userLogoutHandler }}
+      value={{
+        ...authData,
+        userLoginHandler,
+        userLogoutHandler,
+        userUpdateHandler,
+      }}
     >
       {children}
     </UserContext.Provider>

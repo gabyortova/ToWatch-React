@@ -11,19 +11,18 @@ export const useProfile = () => {
     request.get(`${baseUrl}/users/profile`).then(setUser);
   };
 
-  getUser();
+  if (!user) {
+    getUser();
+  }
 
   return { user, getUser };
 };
 
 export const useEditProfile = () => {
   const { request } = useAuth();
-  const { getUser } = useProfile();
 
-  const editProfile = (username, email) => {
-    const data = { username, email };
-    request.put(`${baseUrl}/users/profile`, data).then(getUser);
-  };
+  const editProfile = async (username, email) =>
+    request.put(`${baseUrl}/users/profile`, { username, email });
 
   return { editProfile };
 };

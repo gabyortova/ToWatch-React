@@ -1,12 +1,18 @@
+import { useContext } from "react";
 import { useEditProfile } from "../../api/progileApi";
+import { UserContext, useUserContext } from "../contexts/UserContex";
 
 export default function ProfileEdit({ editClickHandler }) {
+  const { userUpdateHandler } = useContext(UserContext);
   const { editProfile } = useEditProfile();
+
+  const { username, email } = useUserContext();
 
   const submitAction = (formData) => {
     const { username, email } = Object.fromEntries(formData);
-
-    editProfile(username, email);
+    editProfile(username, email).then((authData) =>
+      userUpdateHandler(authData)
+    );
 
     editClickHandler();
   };
@@ -25,6 +31,7 @@ export default function ProfileEdit({ editClickHandler }) {
               name="username"
               required
               minLength="2"
+              defaultValue={username}
             />
 
             <div>
@@ -37,7 +44,13 @@ export default function ProfileEdit({ editClickHandler }) {
             <label htmlFor="email">
               <b>Email:</b>
             </label>
-            <input type="email" id="email" name="email" required />
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              defaultValue={email}
+            />
 
             <div>
               {/* <p className="error">Email is required!</p> */}

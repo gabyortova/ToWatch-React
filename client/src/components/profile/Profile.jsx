@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { useProfile } from "../../api/progileApi";
+// import { useProfile } from "../../api/progileApi";
 import ProfileEdit from "./ProfileEdit";
 import "./Profile.css";
+import { useUserContext } from './../contexts/UserContex';
 
 export default function Profile() {
-  const { user } = useProfile();
+  // const { user } = useProfile();
   const [isEdit, setIsEdit] = useState(false);
+  const {username, email} = useUserContext();
   
   const editClickHandler = () => {
     setIsEdit((isEdit) => !isEdit);
@@ -19,11 +21,11 @@ export default function Profile() {
           <>
             <p>
               <strong>Username: </strong>
-              {user.username}
+              {username}
             </p>
             <p>
               <strong>Email: </strong>
-              {user.email}
+              {email}
             </p>
             <button onClick={editClickHandler}>Edit</button>
           </>
