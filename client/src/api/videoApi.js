@@ -42,6 +42,10 @@ export const useCrateVideo = () => {
   const { request } = useAuth();
 
   const create = (videoData) => {
+    if (!videoData.imgUrl) {
+      videoData.imgUrl = '/images/video-icon.png';
+    }
+
     request.post(baseUrl, videoData);
   };
 

@@ -10,7 +10,7 @@ export default function Header() {
   return (
     <header>
       <Link to="/">
-        <img src="/logoToWatch.png" className="logo" />
+        <img src="/images/logoToWatch.png" className="logo" />
       </Link>
       <nav>
         <ul>
