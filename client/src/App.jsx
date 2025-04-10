@@ -16,6 +16,8 @@ import EditForm from "./components/edit-form/EditForm";
 import ErrorPage from "./components/error-page/ErrorPage";
 import Profile from "./components/profile/Profile";
 import MyVideos from "./components/my-videos/MyVideos";
+import GuestGuard from "./components/guards/GuestGuard";
+import AuthGuard from "./components/guards/AuthGuard";
 
 function App() {
   return (
@@ -24,14 +26,18 @@ function App() {
       <main>
         <Routes>
           <Route index element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route element={<GuestGuard />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
           <Route path="/catalog" element={<Catalog />} />
-          <Route path="/my-videos" element={<MyVideos />} />
           <Route path="/catalog/details/:videoId" element={<Details />} />
-          <Route path="/create-video" element={<CreateVideo />} />
-          <Route path="/edit/:videoId" element={<EditForm />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route element={<AuthGuard />}>
+            <Route path="/my-videos" element={<MyVideos />} />
+            <Route path="/create-video" element={<CreateVideo />} />
+            <Route path="/edit/:videoId" element={<EditForm />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </main>
