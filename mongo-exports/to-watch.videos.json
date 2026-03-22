@@ -1,0 +1,168 @@
+[{
+  "_id": {
+    "$oid": "6764a1967edcf0982f2ee686"
+  },
+  "title": "Design in the Universe",
+  "videoUrl": "https://vimeo.com/434418790",
+  "description": "Interested in learning more about the strengths of design arguments, as well as some cautions? This article will provide valuable perspectives: https://www.grisda.org/design-in-the-physical-universe-1",
+  "imgUrl": "",
+  "isPublic": false,
+  "userId": {
+    "$oid": "67649f5fa832cb3beb3c1cb8"
+  },
+  "created_at": {
+    "$date": "2024-12-19T22:43:34.940Z"
+  },
+  "updatedAt": {
+    "$date": "2024-12-19T22:45:02.312Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6764a3147edcf0982f2ee6b3"
+  },
+  "title": "BEST MUSICS TO FEEL ALIVE",
+  "videoUrl": "https://www.youtube.com/watch?v=vW2HWHYd_jg",
+  "description": "sitting, listening to this playlist and imagining fake scenarios in my head, realizing that I don't have it in reality",
+  "imgUrl": "https://i.ytimg.com/vi/vW2HWHYd_jg/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAjqKvNiDcXGSNBp4dU7F9xWVQtPg",
+  "isPublic": false,
+  "userId": {
+    "$oid": "6760764a1a3f0be4d70aa2de"
+  },
+  "created_at": {
+    "$date": "2024-12-19T22:49:56.712Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-13T06:58:06.364Z"
+  },
+  "__v": 0,
+  "likes": [
+    {
+      "$oid": "67f6ce75291615dc7ea9b82e"
+    },
+    {
+      "$oid": "6760764a1a3f0be4d70aa2de"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "6766d37f4291f744dd206770"
+  },
+  "title": "TypeScript Crash Course 2",
+  "videoUrl": "https://www.youtube.com/watch?v=BCg4U1FzODs",
+  "description": "Learn the basics of TypeScript in this beginner-friendly crash course",
+  "imgUrl": "https://i.ytimg.com/vi/3mDny9XAgic/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDofRa0w-fc0gCZCzU58tC-mXZjow",
+  "isPublic": true,
+  "userId": {
+    "$oid": "6760764a1a3f0be4d70aa2de"
+  },
+  "created_at": {
+    "$date": "2024-12-21T14:41:03.089Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-17T13:36:26.466Z"
+  },
+  "__v": 0,
+  "likes": [
+    {
+      "$oid": "6760764a1a3f0be4d70aa2de"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "67f6dabf996efbbf74c2c970"
+  },
+  "title": "other video",
+  "videoUrl": "https://www.youtube.com/watch?v=vW2HWHYd_jg",
+  "description": "gaby_ortova1",
+  "imgUrl": "https://i.ytimg.com/vi/vW2HWHYd_jg/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLAjqKvNiDcXGSNBp4dU7F9xWVQtPg",
+  "isPublic": true,
+  "likes": [
+    {
+      "$oid": "6760764a1a3f0be4d70aa2de"
+    }
+  ],
+  "userId": {
+    "$oid": "67f6ce75291615dc7ea9b82e"
+  },
+  "created_at": {
+    "$date": "2025-04-09T20:38:23.178Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-09T20:39:50.881Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fb60b8996efbbf74c2cb31"
+  },
+  "title": "test",
+  "videoUrl": "https://softuni.bg/trainings/resources/video/107376/video-14-november-2024-tsveti-stoyanov-angular-october-2024/4712",
+  "description": "tets2",
+  "imgUrl": "/images/video-icon.png",
+  "isPublic": true,
+  "likes": [
+    {
+      "$oid": "6760764a1a3f0be4d70aa2de"
+    },
+    {
+      "$oid": "67fb60f9996efbbf74c2cb41"
+    }
+  ],
+  "userId": {
+    "$oid": "6760764a1a3f0be4d70aa2de"
+  },
+  "created_at": {
+    "$date": "2025-04-13T06:59:04.847Z"
+  },
+  "updatedAt": {
+    "$date": "2025-04-13T07:00:20.948Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69578da02e2a685be90973d4"
+  },
+  "title": "Катан",
+  "videoUrl": "https://www.ozone.bg/product/katan-bazova-igra/",
+  "description": "Настолна игра Catan",
+  "imgUrl": "https://cdn.ozone.bg/media/catalog/product/cache/1/image/400x498/a4e40ebdc3e371adff845072e1c73f37/n/a/84d6a378198a67d82d1d952fa3b90438/nastolna-igra-catan---semeyna-30.jpg",
+  "isPublic": false,
+  "likes": [],
+  "userId": {
+    "$oid": "69514ffa2e2a685be9097349"
+  },
+  "created_at": {
+    "$date": "2026-01-02T09:19:28.602Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-11T18:16:05.243Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6963dea12e2a685be9097414"
+  },
+  "title": "Масажор",
+  "videoUrl": "https://4sales.bg/shiacu-masazhor-za-vrat-i-grb-1537?_gl=1*pojmxn*_up*MQ..*_gs*MQ..&gclid=EAIaIQobChMItuzAtIGEkgMVH1NBAh1oiRVdEAAYASAAEgKenPD_BwE&gbraid=0AAAABBwXd4seblI91YYcxQxgNqHk-JIeA",
+  "description": "Шиацу масажор за врат и гръб\n21,47 € / 41,99 лв.",
+  "imgUrl": "https://4sales.bg/20917-thickbox-default/shiacu-masazhor-za-vrat-i-grb.jpg",
+  "isPublic": false,
+  "likes": [],
+  "userId": {
+    "$oid": "69514ffa2e2a685be9097349"
+  },
+  "created_at": {
+    "$date": "2026-01-11T17:32:17.288Z"
+  },
+  "updatedAt": {
+    "$date": "2026-01-11T18:16:39.107Z"
+  },
+  "__v": 0
+}]
