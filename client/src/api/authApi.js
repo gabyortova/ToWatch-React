@@ -3,7 +3,7 @@ import request from "../utils/request";
 import { UserContext } from "../components/contexts/UserContex";
 import useAuth from "../components/hooks/useAuth";
 
-const baseUrl = "http://localhost:5100/api";
+const baseUrl = `${import.meta.env.VITE_API_URL}/api`;
 
 export const useLogin = () => {
   const login = async (email, password) =>

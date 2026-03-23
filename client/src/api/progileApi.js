@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useAuth from "../components/hooks/useAuth";
 
-const baseUrl = "http://localhost:5100/api";
+const baseUrl = `${import.meta.env.VITE_API_URL}/api`;
 
 export const useProfile = () => {
   const { request } = useAuth();
