@@ -163,7 +163,8 @@ async function like(req, res) {
 
     res.status(200).json({ message: "Video liked successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    console.error("LIKE ERROR:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 }
 
@@ -195,7 +196,8 @@ async function unlike(req, res) {
 
     res.status(200).json({ message: "Video unliked successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    console.error("LIKE ERROR:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 }
 
@@ -212,7 +214,8 @@ async function likeStatus(req, res) {
     const isLiked = user.likedVideos.includes(videoId);
     res.status(200).json({ isLiked });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error });
+    console.error("LIKE ERROR:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 }
 
