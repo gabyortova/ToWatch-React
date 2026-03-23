@@ -2,7 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import request from "../utils/request";
 import useAuth from "../components/hooks/useAuth";
 
-const baseUrl = `${import.meta.env.VITE_API_URL}/api/videos`;
+const viteApiUrl = import.meta.env.VITE_API_URL;
+const baseUrl = `${viteApiUrl}/api/videos`;
 
 export const useVideos = () => {
   const [videos, setVideos] = useState([]);
@@ -83,7 +84,7 @@ export const useLikeVideo = () => {
   const { request } = useAuth();
 
   const likeVideo = (idVideo) => {
-    return request.post(`http://localhost:5100/api/likes/like/${idVideo}`);
+    return request.post(`${viteApiUrl}/api/likes/like/${idVideo}`);
   };
 
   return { likeVideo };
@@ -93,7 +94,7 @@ export const useUnlikeVideo = () => {
   const { request } = useAuth();
 
   const unlikeVideo = (idVideo) => {
-    return request.post(`http://localhost:5100/api/likes/unlike/${idVideo}`);
+    return request.post(`${viteApiUrl}/api/likes/unlike/${idVideo}`);
   };
 
   return { unlikeVideo };
@@ -105,7 +106,7 @@ export const useLikeStatus = () => {
   const getLikeStatus = useCallback(
     (idVideo) => {
       return request.get(
-        `http://localhost:5100/api/likes/like-status/${idVideo}`,
+        `${viteApiUrl}/api/likes/like-status/${idVideo}`,
       );
     },
     [request],
@@ -120,7 +121,7 @@ export const useGetLikeCount = () => {
   const getLikeCount = useCallback(
     (idVideo) => {
       return request.get(
-        `http://localhost:5100/api/likes/like-count/${idVideo}`,
+        `${viteApiUrl}/api/likes/like-count/${idVideo}`,
       );
     },
     [request],
