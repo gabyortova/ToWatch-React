@@ -71,7 +71,7 @@ function createVideo(req, res, next) {
   console.log("userid " + userId);
 
   console.log(
-    `title: ${title}, videoUrl: ${videoUrl}, description: ${description}, imgUrl: ${imgUrl}, userid: ${userId}`
+    `title: ${title}, videoUrl: ${videoUrl}, description: ${description}, imgUrl: ${imgUrl}, userid: ${userId}`,
   );
 
   videoModel
@@ -91,7 +91,7 @@ function editVideo(req, res, next) {
     .findOneAndUpdate(
       { _id: videoId, userId },
       { title, videoUrl, description, imgUrl, isPublic },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     )
     .then((updatedVideo) => {
       if (updatedVideo) {
@@ -132,15 +132,15 @@ function deleteVideo(req, res, next) {
     .catch(next);
 }
 
-async function like(req, res, next) {
-  const { videoId } = req.params;
-  const { _id: userId } = req.user;
-
-  videoModel
-    .updateOne({ _id: videoId }, { $addToSet: { likes: userId } })
-    .catch(next);
-
+async function like(req, res) {
   try {
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const { videoId } = req.params;
+    const { _id: userId } = req.user;
+
     const video = await videoModel.findById(videoId);
     if (!video) {
       return res.status(404).json({ message: "Video not found" });
@@ -151,6 +151,13 @@ async function like(req, res, next) {
       return res.status(400).json({ message: "You already liked this video" });
     }
 
+    // update video
+    await videoModel.updateOne(
+      { _id: videoId },
+      { $addToSet: { likes: userId } },
+    );
+
+    // update user
     user.likedVideos.push(videoId);
     await user.save();
 
@@ -160,15 +167,15 @@ async function like(req, res, next) {
   }
 }
 
-async function unlike(req, res, next) {
-  const { videoId } = req.params;
-  const { _id: userId } = req.user;
-
-    videoModel
-      .updateOne({ _id: videoId }, { $pull: { likes: userId } })
-      .catch(next);
-
+async function unlike(req, res) {
   try {
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const { videoId } = req.params;
+    const { _id: userId } = req.user;
+
     const video = await videoModel.findById(videoId);
     if (!video) {
       return res.status(404).json({ message: "Video not found" });
@@ -179,8 +186,10 @@ async function unlike(req, res, next) {
       return res.status(400).json({ message: "You have not liked this video" });
     }
 
+    await videoModel.updateOne({ _id: videoId }, { $pull: { likes: userId } });
+
     user.likedVideos = user.likedVideos.filter(
-      (id) => id.toString() !== videoId
+      (id) => id.toString() !== videoId,
     );
     await user.save();
 
@@ -197,13 +206,13 @@ async function likeStatus(req, res) {
   try {
     const user = await userModel.findById(userId);
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     const isLiked = user.likedVideos.includes(videoId);
     res.status(200).json({ isLiked });
   } catch (error) {
-    res.status(500).json({ message: 'Server error', error });
+    res.status(500).json({ message: "Server error", error });
   }
 }
 
