@@ -9,7 +9,7 @@ const config = {
   production: {
     port: process.env.PORT || 5100,
     dbURL: process.env.DB_URL_CREDENTIALS,
-    origin: ["http://localhost:5174", "https://YOUR-REAL-APP.vercel.app"],
+    origin: ["http://localhost:5174", "https://to-watch-two.vercel.app"],
   },
 };
 
