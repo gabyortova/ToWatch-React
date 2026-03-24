@@ -1,55 +1,46 @@
-const jwt = require('./jwt');
-const { authCookieName } = require('../app-config');
-const {
-    userModel,
-    tokenBlacklistModel
-} = require('../models');
+const jwt = require("./jwt");
+const { userModel, tokenBlacklistModel } = require("../models");
 
-function auth(redirectUnauthenticated = true) {
-    return function (req, res, next) {
-        const token =
-      req.headers["x-authorization"] || req.cookies[authCookieName] || "";
-        console.debug(req.cookies);
+function auth() {
+  return async function (req, res, next) {
+    try {
+      // get x-authorization header
+      const token = req.headers["x-authorization"];
 
-        console.log('req.cookies[authCookieName] ' + req.cookies[authCookieName]);
-        
-        console.log('Token from cookies:', token);  // Лог за да видите токена
-        
-        Promise.all([
-            jwt.verifyToken(token),
-            tokenBlacklistModel.findOne({ token })
-        ])
-            .then(([data, blacklistedToken]) => {
-                if (blacklistedToken) {
-                    console.log('Token is blacklisted');
-                    return Promise.reject(new Error('blacklisted token'));
-                }
-                userModel.findById(data.id)
-                    .then(user => {
-                        req.user = user;  // Задаване на потребител в req.user
-                        req.isLogged = true;
-                        next();
-                    })
-                    .catch(err => {
-                        console.log('Error finding user:', err);
-                        next(err);
-                    });
-            })
-            .catch(err => {
-                console.error('Auth error:', err.message); // Лог за грешка
-                if (!redirectUnauthenticated) {
-                    next();
-                    return;
-                }
-                if (['token expired', 'blacklisted token', 'jwt must be provided'].includes(err.message)) {
-                    console.error(err);
-                    res.status(401).send({ message: "Invalid token!" });
-                    return;
-                }
-                next(err);
-            });
+      if (!token) {
+        return res.status(401).json({ message: "No token provided" });
+      }
+
+      // check if token is blacklisted
+      const blacklistedToken = await tokenBlacklistModel.findOne({ token });
+      if (blacklistedToken) {
+        return res.status(401).json({ message: "Token is blacklisted" });
+      }
+
+      // verify JWT
+      const decoded = await jwt.verifyToken(token);
+
+      if (!decoded || !decoded.id) {
+        return res.status(401).json({ message: "Invalid token" });
+      }
+
+      // взимаме user от DB
+      const user = await userModel.findById(decoded.id);
+
+      if (!user) {
+        return res.status(401).json({ message: "User not found" });
+      }
+
+      // attach to request
+      req.user = user;
+      req.isLogged = true;
+
+      next();
+    } catch (err) {
+      console.error("Auth middleware error:", err.message);
+      return res.status(401).json({ message: "Unauthorized" });
     }
+  };
 }
-
 
 module.exports = auth;

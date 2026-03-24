@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: { createdAt: "created_at" } }
+  { timestamps: { createdAt: "created_at" } },
 );
 
 userSchema.methods = {
@@ -52,23 +52,15 @@ userSchema.methods = {
   },
 };
 
-userSchema.pre("save", function (next) {
-  if (this.isModified("password")) {
-    bcrypt.genSalt(saltRounds, (err, salt) => {
-      if (err) {
-        next(err);
-      }
-      bcrypt.hash(this.password, salt, (err, hash) => {
-        if (err) {
-          next(err);
-        }
-        this.password = hash;
-        next();
-      });
-    });
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) {
     return;
   }
-  next();
+
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hash = await bcrypt.hash(this.password, salt);
+
+  this.password = hash;
 });
 
 module.exports = mongoose.model("User", userSchema);

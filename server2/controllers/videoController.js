@@ -219,19 +219,21 @@ async function likeStatus(req, res) {
   }
 }
 
-function getLikeCount(req, res, next) {
-  const { videoId } = req.params;
+async function getLikeCount(req, res) {
+  try {
+    const { videoId } = req.params;
 
-  videoModel
-    .findById(videoId)
-    .then((video) => {
-      if (!video) {
-        return res.status(404).json({ message: "Video not found" });
-      }
-      const likeCount = video.likes.length;
-      res.status(200).json({ likeCount });
-    })
-    .catch(next);
+    const video = await videoModel.findById(videoId);
+
+    if (!video) {
+      return res.status(404).json({ message: "Video not found" });
+    }
+
+    res.status(200).json({ likeCount: video.likes.length });
+  } catch (error) {
+    console.error("LIKE ERROR:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
 }
 
 module.exports = {

@@ -32,7 +32,7 @@ function register(req, res, next) {
       // } else {
       //   res.cookie(authCookieName, token, { httpOnly: true });
       // }
-      res.status(200).send({...createdUser, accessToken: token});
+      res.status(200).send({ ...createdUser, accessToken: token });
     })
     .catch((err) => {
       if (err.name === "MongoError" && err.code === 11000) {
@@ -45,7 +45,7 @@ function register(req, res, next) {
           .send({ message: `This ${field} is already registered!` });
         return;
       }
-      next(err);
+      return res.status(401).json({ message: err.message });
     });
 }
 
@@ -66,7 +66,7 @@ function login(req, res, next) {
       user = removePassword(user);
 
       const token = utils.jwt.createToken({ id: user._id });
-      
+
       // if (process.env.NODE_ENV === "production") {
       //   res.cookie(authCookieName, token, {
       //     httpOnly: true,
@@ -77,7 +77,7 @@ function login(req, res, next) {
       //   console.log("development token " + token);
       //   res.cookie(authCookieName, token, { httpOnly: true });
       // }
-      res.status(200).send({...user, accessToken: token});
+      res.status(200).send({ ...user, accessToken: token });
     })
     .catch(next);
 }
@@ -115,7 +115,7 @@ function editProfileInfo(req, res, next) {
     .findOneAndUpdate(
       { _id: userId },
       { tel, username, email },
-      { runValidators: true, new: true }
+      { runValidators: true, new: true },
     )
     .then((x) => {
       res.status(200).json(x);
