@@ -1,8 +1,11 @@
+import { useEffect } from "react";
 import { Routes, Route } from "react-router";
-
-import "./App.css";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import UserProvider from "./providers/UserProvider";
+import { useLoading } from "./providers/loadingContext";
+import { setLoadingHandlers } from "./utils/request";
+import "./App.scss";
 
 import Home from "./components/home/Home";
 import Footer from "./components/footer/Footer";
@@ -20,9 +23,21 @@ import GuestGuard from "./components/guards/GuestGuard";
 import AuthGuard from "./components/guards/AuthGuard";
 
 function App() {
+  const { startLoading, stopLoading, isLoading } = useLoading();
+
+  useEffect(() => {
+    setLoadingHandlers({ startLoading, stopLoading });
+  }, [startLoading, stopLoading]);
+
   return (
     <UserProvider>
       <Header />
+      {isLoading && (
+        <div className="global-loader">
+          <FontAwesomeIcon icon={faSpinner} spin size="3x" />
+        </div>
+      )}
+
       <main>
         <Routes>
           <Route index element={<Home />} />

@@ -1,35 +1,47 @@
+let startLoading;
+let stopLoading;
+
+export function setLoadingHandlers(handlers) {
+  startLoading = handlers.startLoading;
+  stopLoading = handlers.stopLoading;
+}
+
 const request = async (method, url, data, options = {}) => {
-  if (method !== "GET") {
-    options.method = method;
-  }
+  try {
+    startLoading?.();
 
-  if (data) {
-    options = {
-      ...options,
-      headers: {
-        "Content-Type": "application/json",
-        ...options.headers,
-      },
-      body: JSON.stringify(data),
-    };
-  }
+    if (method !== "GET") {
+      options.method = method;
+    }
 
-  const response = await fetch(url, options);
+    if (data) {
+      options = {
+        ...options,
+        headers: {
+          "Content-Type": "application/json",
+          ...options.headers,
+        },
+        body: JSON.stringify(data),
+      };
+    }
 
-  const responseContentType = response.headers.get("Content-Type");
-  if (!responseContentType) {
-    return;
-  }
+    const response = await fetch(url, options);
 
-  if (!response.ok) {
+    const responseContentType = response.headers.get("Content-Type");
+    if (!responseContentType) {
+      return;
+    }
+
+    if (!response.ok) {
+      const result = await response.json();
+      throw result;
+    }
+
     const result = await response.json();
-
-    throw result;
+    return result;
+  } finally {
+    stopLoading?.();
   }
-
-  const result = await response.json();
-
-  return result;
 };
 
 export default {
