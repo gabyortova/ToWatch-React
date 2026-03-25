@@ -1,3 +1,6 @@
+import { useEffect, useCallback } from "react";
+import toast from "react-hot-toast";
+import { setLogoutHandler } from "../utils/request";
 import { UserContext } from "../components/contexts/UserContex";
 import usePersistedState from "../components/hooks/usePersistedState";
 
@@ -8,14 +11,25 @@ export default function UserProvider({ children }) {
     setAuthData(resultData);
   };
 
-  const userLogoutHandler = () => {
-    localStorage.removeItem("auth");
-    setAuthData({});
-  };
+  const userLogoutHandler = useCallback(
+    (isExpired = false) => {
+      localStorage.removeItem("auth");
+      setAuthData({});
+
+      if (isExpired) {
+        toast.error("Session expired. Please login again.");
+      }
+    },
+    [setAuthData],
+  );
 
   const userUpdateHandler = ({ username, email }) => {
     setAuthData({ ...authData, username, email });
   };
+
+  useEffect(() => {
+    setLogoutHandler(() => userLogoutHandler(true));
+  }, [userLogoutHandler]);
 
   return (
     <UserContext.Provider

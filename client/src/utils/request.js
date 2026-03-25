@@ -1,9 +1,14 @@
 let startLoading;
 let stopLoading;
+let logoutHandler;
 
 export function setLoadingHandlers(handlers) {
   startLoading = handlers.startLoading;
   stopLoading = handlers.stopLoading;
+}
+
+export function setLogoutHandler(handler) {
+  logoutHandler = handler;
 }
 
 const request = async (method, url, data, options = {}) => {
@@ -33,6 +38,9 @@ const request = async (method, url, data, options = {}) => {
     }
 
     if (!response.ok) {
+      if (response.status === 401) {
+        logoutHandler?.(); // auto logout
+      }
       const result = await response.json();
       throw result;
     }
