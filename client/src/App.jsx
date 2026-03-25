@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { Routes, Route } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -25,7 +25,7 @@ import AuthGuard from "./components/guards/AuthGuard";
 function App() {
   const { startLoading, stopLoading, isLoading } = useLoading();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setLoadingHandlers({ startLoading, stopLoading });
   }, [startLoading, stopLoading]);
 
