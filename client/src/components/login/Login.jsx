@@ -6,14 +6,17 @@ import "./Login.css";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { mutateAsync: login } = useLogin();
   const { userLoginHandler } = useContext(UserContext);
-  const { login } = useLogin();
 
   const loginHandler = async (_, formData) => {
-    const values = Object.fromEntries(formData);
+    const { email, password } = Object.fromEntries(formData);
 
     try {
-      const authData = await login(values.email, values.password);
+      const authData = await login({
+        email: email,
+        password: password,
+      });
       userLoginHandler(authData);
 
       navigate(-1);

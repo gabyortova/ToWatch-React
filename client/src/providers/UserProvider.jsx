@@ -9,6 +9,7 @@ export default function UserProvider({ children }) {
   };
 
   const userLogoutHandler = () => {
+    localStorage.removeItem("auth");
     setAuthData({});
   };
 

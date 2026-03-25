@@ -6,25 +6,34 @@ import "./Register.css";
 
 export default function Register() {
   const navigate = useNavigate();
-  const { register } = useRegister();
+  const { mutateAsync: register } = useRegister();
   const { userLoginHandler } = useUserContext();
 
   const registerHandler = async (formData) => {
-    const { username, email, password, rePassword } = Object.fromEntries(formData);
+    const { username, email, password, rePass } = Object.fromEntries(formData);
 
-    const confirmPassword = formData.get("rePass");
-
-    if (password !== confirmPassword) {
-      console.log("Password missmatch");
-
+    if (password !== rePass) {
+      console.log("Password mismatch");
       return;
     }
 
-    const authData = await register(username, email, password, rePassword);
-
-    userLoginHandler(authData);
-
-    navigate("/");
+    await register(
+      {
+        username,
+        email,
+        pass: password,
+        rePass,
+      },
+      {
+        onSuccess: (authData) => {
+          userLoginHandler(authData);
+          navigate("/");
+        },
+        onError: (err) => {
+          console.error("REGISTER ERROR:", err);
+        },
+      },
+    );
   };
 
   return (

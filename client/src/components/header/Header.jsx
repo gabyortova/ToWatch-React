@@ -1,11 +1,11 @@
-import "./Header.css";
 import { Link } from "react-router-dom";
+import { useLogout } from "../../api/authApi";
 import useAuth from "../hooks/useAuth";
-import { useUserContext } from "../contexts/UserContex";
+import "./Header.css";
 
 export default function Header() {
   const { username, isAuthenticated } = useAuth();
-  const { userLogoutHandler } = useUserContext();
+  const { logout } = useLogout();
 
   return (
     <header>
@@ -32,7 +32,7 @@ export default function Header() {
                 <Link to="/profile">Hello, {username}!</Link>
               </li>
               <li>
-                <a onClick={userLogoutHandler}>Logout</a>
+                <a onClick={logout}>Logout</a>
               </li>
             </>
           )}

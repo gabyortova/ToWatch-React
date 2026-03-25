@@ -1,23 +1,29 @@
 import { useState } from "react";
 
-export default function usePersistedState(stateKey, initalState) {
+export default function usePersistedState(stateKey, initialState) {
   const [state, setState] = useState(() => {
     const persistedState = localStorage.getItem(stateKey);
-    if (!persistedState) {
-      return typeof initalState === "function" ? initalState() : initalState;
+
+    if (!persistedState || persistedState === "undefined") {
+      return typeof initialState === "function" ? initialState() : initialState;
     }
 
-    const persistedStateData = JSON.parse(persistedState);
-
-    return persistedStateData;
+    try {
+      return JSON.parse(persistedState);
+    } catch (error) {
+      console.error("Invalid JSON in localStorage:", error);
+      return typeof initialState === "function" ? initialState() : initialState;
+    }
   });
 
   const setPersistedState = (input) => {
     const data = typeof input === "function" ? input(state) : input;
 
-    const persistedData = JSON.stringify(data);
-
-    localStorage.setItem(stateKey, persistedData);
+    if (data === undefined) {
+      localStorage.removeItem(stateKey);
+    } else {
+      localStorage.setItem(stateKey, JSON.stringify(data));
+    }
 
     setState(data);
   };
