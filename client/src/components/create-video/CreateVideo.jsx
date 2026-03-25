@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 import { useCreateVideo } from "../../api/videoApi";
 
 export default function CreateVideo() {
@@ -15,7 +16,11 @@ export default function CreateVideo() {
 
     createVideo(videoData);
 
-    navigate(`/catalog`);
+    toast.success("Video created successfully!", {
+      duration: 3000,
+    });
+
+    navigate(`/my-videos`);
   };
 
   return (

@@ -17,7 +17,9 @@ export default function UserProvider({ children }) {
       setAuthData({});
 
       if (isExpired) {
-        toast.error("Session expired. Please login again.");
+        toast.error("Session expired. Please login again.", {
+          duration: 8000,
+        });
       }
     },
     [setAuthData],
