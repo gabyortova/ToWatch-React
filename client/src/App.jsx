@@ -33,8 +33,10 @@ function App() {
     <UserProvider>
       <Header />
       {isLoading && (
-        <div className="global-loader">
-          <FontAwesomeIcon icon={faSpinner} spin size="3x" />
+        <div className="global-loader-overlay">
+          <div className="global-loader-spinner">
+            <FontAwesomeIcon icon={faSpinner} spin size="3x" />
+          </div>
         </div>
       )}
 
