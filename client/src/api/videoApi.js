@@ -12,8 +12,8 @@ export const useVideos = () => {
     queryKey: ["videos"],
     queryFn: () => request.get(baseUrl),
     staleTime: ONE_DAY,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
+    refetchOnWindowFocus: true,
+    refetchOnMount: "always",
   });
 };
 
@@ -23,8 +23,8 @@ export const useVideo = (videoId) => {
     queryFn: () => request.get(`${baseUrl}/${videoId}`),
     enabled: !!videoId,
     staleTime: ONE_DAY,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
+    refetchOnWindowFocus: true,
+    refetchOnMount: "always",
   });
 };
 
@@ -35,8 +35,8 @@ export const useMyVideos = () => {
     queryKey: ["my-videos"],
     queryFn: () => request.get(`${baseUrl}/my`),
     staleTime: ONE_DAY,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
+    refetchOnWindowFocus: true,
+    refetchOnMount: "always",
   });
 };
 
@@ -53,6 +53,7 @@ export const useCreateVideo = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["videos"] });
+      queryClient.invalidateQueries({ queryKey: ["my-videos"] });
     },
   });
 };
@@ -70,6 +71,7 @@ export const useEditVideo = () => {
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["videos"] });
+      queryClient.invalidateQueries({ queryKey: ["my-videos"] });
       queryClient.invalidateQueries(["video", variables.videoId]);
     },
   });
@@ -83,6 +85,7 @@ export const useDeleteVideo = () => {
     mutationFn: (videoId) => request.delete(`${baseUrl}/${videoId}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["videos"] });
+      queryClient.invalidateQueries({ queryKey: ["my-videos"] });
     },
   });
 };
@@ -160,8 +163,8 @@ export const useLikeStatus = (idVideo) => {
     queryFn: () =>
       request.get(`${viteApiUrl}/api/likes/like-status/${idVideo}`),
     enabled: !!idVideo && isAuthenticated,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
+    refetchOnWindowFocus: true,
+    refetchOnMount: "always",
   });
 };
 
@@ -172,7 +175,7 @@ export const useGetLikeCount = (idVideo) => {
     queryKey: ["like-count", idVideo],
     queryFn: () => request.get(`${viteApiUrl}/api/likes/like-count/${idVideo}`),
     enabled: !!idVideo,
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
+    refetchOnWindowFocus: true,
+    refetchOnMount: "always",
   });
 };

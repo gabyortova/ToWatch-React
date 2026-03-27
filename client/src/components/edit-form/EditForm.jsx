@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 import { useEditVideo, useVideo } from "../../api/videoApi";
 import "./EditForm.css";
 
@@ -30,6 +31,9 @@ export default function EditForm() {
       { videoId, videoData },
       {
         onSuccess: () => {
+          toast.success("Video updated successfully!", {
+            duration: 3000,
+          });
           navigate("/my-videos");
         },
       },

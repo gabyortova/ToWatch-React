@@ -14,13 +14,15 @@ export default function CreateVideo() {
 
     const videoData = { title, videoUrl, description, imgUrl, isPublic };
 
-    createVideo(videoData);
+    createVideo(videoData, {
+      onSuccess: () => {
+        toast.success("Video created successfully!", {
+          duration: 3000,
+        });
 
-    toast.success("Video created successfully!", {
-      duration: 3000,
+        navigate("/my-videos");
+      },
     });
-
-    navigate(`/my-videos`);
   };
 
   return (

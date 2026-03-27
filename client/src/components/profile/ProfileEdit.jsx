@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import toast from "react-hot-toast";
 import { useEditProfile } from "../../api/progileApi";
 import { UserContext, useUserContext } from "../contexts/UserContex";
 
@@ -10,8 +11,12 @@ export default function ProfileEdit({ editClickHandler }) {
 
   const submitAction = (formData) => {
     const { username, email } = Object.fromEntries(formData);
-    editProfile(username, email).then((authData) =>
-      userUpdateHandler(authData)
+    editProfile(username, email).then(
+      (authData) => userUpdateHandler(authData),
+
+      toast.success("Profile updated successfully!", {
+        duration: 3000,
+      }),
     );
 
     editClickHandler();

@@ -1,4 +1,5 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
@@ -12,6 +13,7 @@ import {
 } from "../../api/videoApi";
 import { useUserContext } from "../contexts/UserContex";
 import useAuth from "../hooks/useAuth";
+import { confirmToast } from "../confirmToast/confirmToast";
 import "./Details.css";
 
 export default function Details() {
@@ -35,11 +37,16 @@ export default function Details() {
   const likeCount = likeCountData?.likeCount ?? 0;
 
   const deleteVideoHandler = () => {
-    if (confirm("Are you sure you want to delete this video?")) {
-      deleteVideo(videoId);
-
-      navigate("/my-videos");
-    }
+    confirmToast("Are you sure you want to delete this video?", () => {
+      deleteVideo(videoId, {
+        onSuccess: () => {
+          toast.success("Video deleted successfully!", {
+            duration: 4000,
+          });
+          navigate("/my-videos");
+        },
+      });
+    });
   };
 
   const likeVideoHandler = async () => {
