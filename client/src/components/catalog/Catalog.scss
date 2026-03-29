@@ -1,3 +1,5 @@
+@use '/src/colors.module.scss' as *;
+
 .no-videos-container {
   margin: auto;
   height: 700px auto;
@@ -18,7 +20,7 @@
 }
 
 .card {
-  background-color: #fff;
+  background-color: white;
   border-radius: 10px;
   overflow: hidden;
   text-align: center;
@@ -36,7 +38,7 @@
 .card h2 {
   font-size: 1.5em;
   margin: 10px 0;
-  color: #333;
+  color: $dark-gray;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

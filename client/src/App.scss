@@ -1,4 +1,4 @@
-$main-color: #612940;
+@use '/src/colors.module.scss' as *;
 
 body {
   font-family: Arial, sans-serif;
@@ -8,7 +8,7 @@ body {
   margin: 0;
   padding: 0;
   position: relative;
-  background-color: #fdecef;
+  background-color: $secondary-color;
 }
 
 body,
@@ -50,7 +50,7 @@ button,
 a.button,
 button:disabled:hover {
   background-color: $main-color;
-  color: #fdecef;
+  color: $secondary-color;
   font-size: 1.2em;
   font-weight: bold;
   padding: 16px 20px;
@@ -64,7 +64,7 @@ button:disabled:hover {
 a.button,
 button {
   &:hover {
-    background-color: #9d6381;
+    background-color: $btn-hoover-color;
   }
 }
 
@@ -82,7 +82,7 @@ button:disabled {
   width: 80%;
   max-width: 840px;
   background-color: white;
-  border: #cecccc solid;
+  border: $grey-color solid;
   border-radius: 10px;
 }
 
@@ -93,12 +93,12 @@ button:disabled {
 
 input,
 textarea {
-  color: #0f110c;
+  color: $text-color;
   width: 100%;
   padding: 16px;
   display: inline-block;
   border: none;
-  background: #cecccc;
+  background: $grey-color;
   border-radius: 10px;
 }
 
@@ -106,7 +106,7 @@ input {
   margin: 6px 0;
 
   &:focus {
-    background: rgba(206, 204, 204, 0.7);
+    background: rgba($grey-color, 0.7);
     outline: none;
   }
 
@@ -135,7 +135,7 @@ p.error {
   left: 0;
   width: 100%;
   height: calc(100% - 140px - 50px);
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(white, 0.6);
   z-index: 9998;
   pointer-events: none; // allows click-through overlay on other elements
 
@@ -144,7 +144,7 @@ p.error {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #612940;
+    color: $main-color;
     pointer-events: auto;
   }
 }

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useEditVideo, useVideo } from "../../api/videoApi";
-import "./EditForm.css";
+import "./EditForm.scss";
 
 export default function EditForm() {
   const [isPublic, setIsPublic] = useState(false);

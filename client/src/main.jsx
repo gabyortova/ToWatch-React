@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { LoadingProvider } from "./providers/LoadingProvider.jsx";
 import App from "./App.jsx";
+import colors from "./colors.module.scss"; 
 
 const queryClient = new QueryClient();
 
@@ -17,7 +18,7 @@ createRoot(document.getElementById("root")).render(
             padding: "16px",
           },
           iconTheme: {
-            primary: "#612940",
+            primary: colors.mainColor,
             secondary: "#ffffff",
           },
         }}

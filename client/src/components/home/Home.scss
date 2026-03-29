@@ -1,3 +1,5 @@
+@use "/src/colors.module.scss" as *;
+
 .container-home {
   width: 70%;
   margin: 0 auto;
@@ -5,7 +7,7 @@
 
 .container-home h1 {
   font-size: 1.8em;
-  color: #2c3e50;
+  color: $navy-color;
   margin-top: 15px;
   margin-bottom: 15px;
   font-weight: bold;
@@ -14,13 +16,8 @@
 
 .description {
   font-size: 1.1em;
-  color: #34495e;
+  color: $steel-blue;
   line-height: 1.6;
-}
-
-.emoji {
-  font-size: 2em;
-  color: #e74c3c;
 }
 
 .list {
@@ -30,7 +27,7 @@
 
 .list li {
   font-size: 1.2em;
-  color: #2c3e50;
+  color: $navy-color;
   margin-bottom: 10px;
 }
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 // import { useProfile } from "../../api/progileApi";
 import ProfileEdit from "./ProfileEdit";
-import "./Profile.css";
+import "./Profile.scss";
 import { useUserContext } from './../contexts/UserContex';
 
 export default function Profile() {

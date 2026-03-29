@@ -1,3 +1,5 @@
+@use '/src/colors.module.scss' as *;
+
 .form-container {
   box-sizing: border-box;
 }
@@ -25,13 +27,13 @@
 
 .form-container input,
 .form-container textarea {
-  color: #0f110c;
+  color: $text-color;
   width: 100%;
   padding: 15px;
   margin: 5px 0 22px 0;
   display: inline-block;
   border: none;
-  background: #cecccc;
+  background: $grey-color;
   border-radius: 10px;
 }
 

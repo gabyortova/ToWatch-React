@@ -1,6 +1,6 @@
 import { useVideos } from "../../api/videoApi";
 import CatalogItem from "./catalog-item/CatalogItem";
-import "./Catalog.css";
+import "./Catalog.scss";
 
 export default function Catalog() {
   const { data: videos } = useVideos();

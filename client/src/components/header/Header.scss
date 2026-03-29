@@ -1,3 +1,5 @@
+@use '/src/colors.module.scss' as *;
+
 header,
 header ul {
   display: flex;
@@ -6,8 +8,8 @@ header ul {
 }
 
 header {
-  background-color: #612940;
-  color: #cecccc;
+  background-color: $main-color;
+  color: $grey-color;
   height: 35px;
   padding: 10px;
   align-items: center;
@@ -21,7 +23,7 @@ header li {
 }
 
 header a {
-  color: #fdecef;
+  color: $secondary-color;
   border-radius: 8px;
   margin-left: 10px;
   padding: 5px 10px;
@@ -30,7 +32,7 @@ header a {
 }
 
 header a:hover {
-  color: #cecccc; 
+  color: $grey-color; 
 }
 
 nav ul {
