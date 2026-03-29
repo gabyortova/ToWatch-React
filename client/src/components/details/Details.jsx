@@ -86,7 +86,23 @@ export default function Details() {
       <p>{video?.description}</p>
 
       <h2>Created at:</h2>
-      <p>{video?.created_at}</p>
+      <p>
+        <h2>Created at:</h2>
+        <p>
+          {video?.created_at
+            ? new Date(video.created_at)
+                .toLocaleString("en-GB", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: false,
+                })
+                .replace(/\//g, ".") + " h"
+            : ""}
+        </p>
+      </p>
 
       <div className="likes-container">
         <p>Likes {likeCount}</p>
