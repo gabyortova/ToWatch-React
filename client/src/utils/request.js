@@ -38,9 +38,12 @@ const request = async (method, url, data, options = {}) => {
     }
 
     if (!response.ok) {
-      if (response.status === 401) {
+      const isAuthRoute = url.includes("login") || url.includes("register");
+
+      if (response.status === 401 && !isAuthRoute) {
         logoutHandler?.(); // auto logout
       }
+
       const result = await response.json();
       throw result;
     }

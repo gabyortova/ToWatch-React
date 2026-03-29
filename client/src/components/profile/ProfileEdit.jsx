@@ -1,30 +1,66 @@
-import { useContext } from "react";
+import { useActionState, useContext } from "react";
 import toast from "react-hot-toast";
-import { useEditProfile } from "../../api/progileApi";
+import { useEditProfile } from "../../api/profileApi";
 import { UserContext, useUserContext } from "../contexts/UserContex";
 
 export default function ProfileEdit({ editClickHandler }) {
   const { userUpdateHandler } = useContext(UserContext);
-  const { editProfile } = useEditProfile();
+  const { mutateAsync: editProfile } = useEditProfile();
+  const { username: currentUsername, email: currentEmail } = useUserContext();
 
-  const { username, email } = useUserContext();
-
-  const submitAction = (formData) => {
+  const submitAction = async (_, formData) => {
     const { username, email } = Object.fromEntries(formData);
-    editProfile(username, email).then(
-      (authData) => userUpdateHandler(authData),
 
-      toast.success("Profile updated successfully!", {
+    const errors = {};
+
+    if (!username) {
+      errors.username = "Username is required!";
+    } else if (username.length < 2) {
+      errors.username = "Username must be at least 2 characters!";
+    } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+      errors.username = "Username must contain only latin letters and digits!";
+    }
+
+    if (!email) {
+      errors.email = "Email is required!";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = "Email is not valid!";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      return { errors, values: { username, email } };
+    }
+
+    try {
+      const authData = await editProfile({ username, email });
+
+      userUpdateHandler(authData);
+
+      (toast.success("Profile updated successfully!", {
         duration: 3000,
       }),
-    );
+        editClickHandler());
 
-    editClickHandler();
+      return { errors: {}, values: {} };
+    } catch (err) {
+      console.error(err);
+
+      const errorMessage =
+        err.response?.data?.message || err.message || "Update profile failed!";
+      toast.error(errorMessage);
+
+      return { errors: {}, values: { username, email } };
+    }
   };
+
+  const [state, formAction, isPending] = useActionState(submitAction, {
+    errors: {},
+    values: null,
+  });
 
   return (
     <>
-      <form action={submitAction}>
+      <form action={formAction}>
         <div>
           <div className="inputCont">
             <label htmlFor="username">
@@ -34,17 +70,13 @@ export default function ProfileEdit({ editClickHandler }) {
               type="text"
               id="username"
               name="username"
-              required
-              minLength="2"
-              defaultValue={username}
+              defaultValue={state.values?.username ?? currentUsername}
             />
-
-            <div>
-              {/* <p className="error">Username is required!</p> */}
-
-              {/* <p className="error">Username must be at least 2 characters!</p> */}
-            </div>
+            {state.errors?.username && (
+              <p className="error">{state.errors.username}</p>
+            )}
           </div>
+
           <div className="inputCont">
             <label htmlFor="email">
               <b>Email:</b>
@@ -53,21 +85,25 @@ export default function ProfileEdit({ editClickHandler }) {
               type="email"
               id="email"
               name="email"
-              required
-              defaultValue={email}
+              defaultValue={state.values?.email ?? currentEmail}
             />
-
-            <div>
-              {/* <p className="error">Email is required!</p> */}
-
-              {/* <p className="error">Email is not valid gmail!</p> */}
-            </div>
+            {state.errors?.email && (
+              <p className="error">{state.errors.email}</p>
+            )}
           </div>
+
           <div className="buttons">
-            <button onClick={editClickHandler} type="button" className="button">
+            <button
+              onClick={editClickHandler}
+              type="button"
+              className="button"
+              disabled={isPending}
+            >
               Cancel
             </button>
-            <button className="button">Save</button>
+            <button className="button" disabled={isPending}>
+              {isPending ? "Saving..." : "Save"}
+            </button>
           </div>
         </div>
       </form>

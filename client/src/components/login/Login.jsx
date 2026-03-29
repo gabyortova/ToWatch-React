@@ -1,5 +1,6 @@
 import { useActionState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import { useLogin } from "./../../api/authApi";
 import { UserContext } from "../contexts/UserContex";
 import "./Login.css";
@@ -11,24 +12,43 @@ export default function Login() {
 
   const loginHandler = async (_, formData) => {
     const { email, password } = Object.fromEntries(formData);
+    const errors = {};
+
+    if (!email) {
+      errors.email = "Email is required!";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = "Email is not valid!";
+    }
+
+    if (!password) {
+      errors.password = "Password is required!";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      return { errors, values: { email, password } };
+    }
 
     try {
-      const authData = await login({
-        email: email,
-        password: password,
-      });
+      const authData = await login({ email, password });
       userLoginHandler(authData);
 
       navigate(-1);
+
+      return { errors: {}, values: { email: "", password: "" } };
     } catch (err) {
-      //TODO
-      console.log(err);
+      console.error(err);
+
+      const errorMessage =
+        err.response?.data?.message || err.message || "Login failed!";
+      toast.error(errorMessage);
+
+      return { errors: {}, values: { email, password } };
     }
   };
 
-  const [_, loginAction, isPending] = useActionState(loginHandler, {
-    email: "",
-    password: "",
+  const [state, loginAction, isPending] = useActionState(loginHandler, {
+    errors: {},
+    values: { email: "", password: "" },
   });
 
   return (
@@ -46,13 +66,14 @@ export default function Login() {
                 placeholder="your.mail@gmail.com"
                 name="email"
                 id="email"
+                defaultValue={state.values?.email}
                 required
               />
 
               <div>
-                {/* <p className="error">Email is required!</p> */}
-
-                {/* <p className="error">Email is not valid gmail!</p> */}
+                {state.errors?.email && (
+                  <p className="error">{state.errors.email}</p>
+                )}
               </div>
             </div>
 
@@ -66,17 +87,20 @@ export default function Login() {
                 name="password"
                 id="password"
                 minLength="5"
+                defaultValue={state.values?.password}
                 required
               />
 
               <div>
-                {/* <p className="error">Password is required!</p> */}
-
-                {/* <p className="error">Password must be at least 5 characters!</p> */}
+                {state.errors?.password && (
+                  <p className="error">{state.errors.password}</p>
+                )}
               </div>
             </div>
           </div>
-          <button disabled={isPending}>Login</button>
+          <button disabled={isPending}>
+            {isPending ? "Logging in..." : "Login"}
+          </button>
         </div>
         <div className="register">
           <p>

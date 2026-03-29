@@ -1,11 +1,9 @@
 import { useState } from "react";
-// import { useProfile } from "../../api/progileApi";
+import { useUserContext } from './../contexts/UserContex';
 import ProfileEdit from "./ProfileEdit";
 import "./Profile.scss";
-import { useUserContext } from './../contexts/UserContex';
 
 export default function Profile() {
-  // const { user } = useProfile();
   const [isEdit, setIsEdit] = useState(false);
   const {username, email} = useUserContext();
   
